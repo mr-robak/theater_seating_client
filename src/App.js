@@ -13,7 +13,7 @@ function App() {
     axios
       .get(`${API_URL}/event-layout`)
       .then((res) => {
-        setTheater(res);
+        setTheater(res.data);
       })
       .catch((error) => {
         console.log(error);
@@ -22,7 +22,7 @@ function App() {
 
   return (
     <div className="App">
-      <Booking theater={theater} />
+      <Booking {...theater} />
     </div>
   );
 }
