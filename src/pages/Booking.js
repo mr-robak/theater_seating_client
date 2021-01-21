@@ -2,12 +2,11 @@ import React, { useContext, useEffect } from "react";
 import axios from "axios";
 import { API_URL } from "../secrets/secrets";
 import TheaterLayout from "../components/TheaterLayout";
+import OptionsPanel from "../components/OptionsPanel";
 import { store } from "../store/store";
 
 export default function Booking() {
   const { state, dispatch } = useContext(store);
-
-  console.log("state", state);
 
   useEffect(() => {
     axios
@@ -22,6 +21,7 @@ export default function Booking() {
 
   return (
     <div>
+      <OptionsPanel />
       <TheaterLayout {...state.event} />
     </div>
   );
