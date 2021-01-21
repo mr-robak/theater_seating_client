@@ -2,7 +2,10 @@ import React, { createContext, useReducer } from "react";
 
 const initialState = {
   isLoading: true,
-
+  alert: {
+    open: false,
+    message: "",
+  },
   event: {},
 };
 
@@ -15,14 +18,19 @@ const StateProvider = ({ children }) => {
     switch (action.type) {
       case "EVENT_FETCHED": {
         // console.log(action.payload);
-        const newState = {
-          isLoading: false,
-          event: action.payload,
-        };
+        const newState = { ...state, isLoading: false, event: action.payload };
         return newState;
       }
       case "LOADING": {
         const newState = {};
+        return newState;
+      }
+
+      case "ALERT": {
+        const newState = {
+          ...state,
+          alert: { open: true, message: action.payload },
+        };
         return newState;
       }
 
