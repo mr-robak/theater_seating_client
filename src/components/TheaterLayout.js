@@ -13,8 +13,6 @@ const TD = styled.td`
 `;
 
 export default function TheaterLayout(props) {
-  console.log(props);
-
   const layout = props;
 
   const rankColor = ["#5fff7c", "#ff8ea6", "#a688ff"];

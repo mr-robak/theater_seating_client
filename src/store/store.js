@@ -2,7 +2,7 @@ import React, { createContext, useReducer } from "react";
 
 const initialState = {
   isLoading: true,
-  theater: {},
+
   event: {},
 };
 
@@ -14,7 +14,11 @@ const StateProvider = ({ children }) => {
   const [state, dispatch] = useReducer((state, action) => {
     switch (action.type) {
       case "EVENT_FETCHED": {
-        const newState = {};
+        // console.log(action.payload);
+        const newState = {
+          isLoading: false,
+          event: action.payload,
+        };
         return newState;
       }
       case "LOADING": {
