@@ -1,11 +1,24 @@
 import React from "react";
+import styled from "@emotion/styled";
+
+const TD = styled.td`
+  height: 1.8em;
+  width: 1.5em;
+  border: none;
+  border-radius: 11px 11px 0 0;
+  :hover {
+    background-color: yellow;
+    color: #ffff;
+  }
+`;
 
 export default function TheaterLayout(props) {
   console.log(props);
 
   const layout = props;
 
-  const rankColor = ["#5fff5c", "#ff8ea6", "#a688ff"];
+  const rankColor = ["#5fff7c", "#ff8ea6", "#a688ff"];
+  const bookedColor = "#000000";
 
   const renderLayout = (layout) => {
     const sections = Object.keys(layout);
@@ -29,25 +42,28 @@ export default function TheaterLayout(props) {
               //   console.log(rankColor[rank]);
               return (
                 <tr key={i} style={{ backgroundColor: rankColor[rank] }}>
-                  <td style={{ backgroundColor: "white" }}>{row}</td>
+                  <TD style={{ backgroundColor: "white" }}>{row}</TD>
                   {seats.map((seat, i) => {
                     return !seat.status ? (
-                      <td
+                      <TD
                         key={i}
                         style={{
                           backgroundColor: rankColor[rank],
-                          color: "black",
+                          color: "white",
                         }}
                       >
                         {seat.number}
-                      </td>
+                      </TD>
                     ) : (
-                      <td
+                      <TD
                         key={i}
-                        style={{ backgroundColor: "black", color: "white" }}
+                        style={{
+                          backgroundColor: { bookedColor },
+                          color: "white",
+                        }}
                       >
                         {seat.status}
-                      </td>
+                      </TD>
                     );
                   })}
                 </tr>
