@@ -4,19 +4,27 @@ import styled from "@emotion/styled";
 const TD = styled.td`
   height: 1.8em;
   width: 1.5em;
-  border: none;
-  border-radius: 11px 11px 0 0;
+  /* border: none; */
+  border-radius: 13px 13px 0 0;
   :hover {
     background-color: yellow;
     color: #ffff;
   }
 `;
 
+const THEATER = styled.div`
+  display: inline-block;
+  justify-content: center;
+`;
+const TABLE = styled.table`
+  margin-top: 1em;
+`;
+
 export default function TheaterLayout(props) {
   const layout = props;
 
   const rankColor = ["#5fff7c", "#ff8ea6", "#a688ff"];
-  const bookedColor = "#000000";
+  const bookedColor = "#5e5d5d";
 
   const renderLayout = (layout) => {
     const sections = Object.keys(layout);
@@ -26,7 +34,7 @@ export default function TheaterLayout(props) {
       //   console.log("section", section);
       const rows = Object.keys(section.rows);
       return (
-        <table key={i}>
+        <TABLE key={i}>
           <thead>
             <tr>
               <th colSpan="9">{layout[sectionNr].name}</th>
@@ -56,7 +64,7 @@ export default function TheaterLayout(props) {
                       <TD
                         key={i}
                         style={{
-                          backgroundColor: { bookedColor },
+                          backgroundColor: bookedColor,
                           color: "white",
                         }}
                       >
@@ -68,10 +76,10 @@ export default function TheaterLayout(props) {
               );
             })}
           </tbody>
-        </table>
+        </TABLE>
       );
     });
   };
 
-  return <div>{renderLayout(layout)}</div>;
+  return <THEATER>{renderLayout(layout)}</THEATER>;
 }
