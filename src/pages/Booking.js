@@ -9,6 +9,7 @@ import styled from "@emotion/styled";
 const Root = styled.div`
   display: inline-block;
   justify-content: center;
+  margin-top: 1em;
 `;
 const Container = styled.div`
   display: flex;

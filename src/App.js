@@ -1,9 +1,12 @@
-import { Snackbar } from "@material-ui/core";
 import { useContext, useEffect, useState } from "react";
-import "./App.css";
-import Booking from "./pages/Booking";
+import { Switch, Route } from "react-router-dom";
 import { store } from "./store/store";
+import { Snackbar } from "@material-ui/core";
+import "./App.css";
 import MuiAlert from "@material-ui/lab/Alert";
+import Booking from "./pages/Booking";
+import AdminDashboard from "./pages/AdminDashboard";
+import NavBar from "./components/NavBar";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -19,6 +22,7 @@ function App() {
 
   return (
     <div className="App">
+      <NavBar />
       <Snackbar
         open={alert.open}
         autoHideDuration={3000}
@@ -27,7 +31,15 @@ function App() {
       >
         <Alert severity="success">{alert.message}</Alert>
       </Snackbar>
-      <Booking />
+
+      <Switch>
+        <Route path="/admin-dashboard">
+          <AdminDashboard />
+        </Route>
+        <Route path="/">
+          <Booking />
+        </Route>
+      </Switch>
     </div>
   );
 }
