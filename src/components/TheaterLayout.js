@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styled from "@emotion/styled";
+import { store } from "../store/store";
 
 const Container = styled.div`
   /* display: inline-block; */
@@ -9,7 +10,9 @@ const Container = styled.div`
   border-radius: 5px;
   box-shadow: 2px 1px 11px 0px rgba(0, 0, 0, 0.35);
 `;
-const Table = styled.table``;
+const Table = styled.table`
+  margin-top: 0.7em;
+`;
 
 const TD = styled.td`
   height: 1.8em;
@@ -35,10 +38,22 @@ const Rank = styled.div`
 `;
 
 export default function TheaterLayout(props) {
-  const layout = props;
+  const data = props.data;
+  const [layout, setLayout] = useState(data);
+  // console.log("layout", layout);
+  // console.log("data", data);
+
+  const { dispatch } = useContext(store);
 
   const rankColor = ["#5fff7c", "#ff8ea6", "#a688ff"];
   const bookedColor = "#5e5d5d";
+
+  const seatSelect = (seat) => dispatch({ type: "SEAT_SELECT", payload: seat });
+
+  useEffect(() => {
+    const data = props.data;
+    setLayout(data);
+  }, [props.data]);
 
   const renderLayout = (layout) => {
     const sections = Object.keys(layout);
@@ -64,22 +79,49 @@ export default function TheaterLayout(props) {
                 <tr key={i} style={{ backgroundColor: rankColor[rank] }}>
                   <TD style={{ backgroundColor: "white" }}>{row}</TD>
                   {seats.map((seat, i) => {
-                    return !seat.status ? (
+                    const currentSeat = {
+                      section: (sectionNr *= 1),
+                      row: (row *= 1),
+                      seat: (seat.number *= 1),
+                    };
+                    return seat.status === null ? (
                       <TD
+                        onClick={
+                          props.admin
+                            ? () => {
+                                layout[sectionNr].rows[row].seats[i].status =
+                                  seat.status === "B" ? null : "B";
+                                setLayout({ ...layout });
+                                seatSelect(currentSeat);
+                              }
+                            : null
+                        }
                         key={i}
                         style={{
                           backgroundColor: rankColor[rank],
                           color: "white",
+                          cursor: props.admin ? "pointer" : null,
                         }}
                       >
                         {seat.number}
                       </TD>
                     ) : (
                       <TD
+                        onClick={
+                          props.admin
+                            ? () => {
+                                layout[sectionNr].rows[row].seats[i].status =
+                                  seat.status === "B" ? null : "B";
+                                setLayout({ ...layout });
+                                seatSelect(currentSeat);
+                              }
+                            : null
+                        }
                         key={i}
                         style={{
                           backgroundColor: bookedColor,
                           color: "white",
+                          cursor: props.admin ? "pointer" : null,
                         }}
                       >
                         {seat.status}
@@ -146,6 +188,15 @@ export default function TheaterLayout(props) {
             }}
           />
           <span>Seat booked</span>
+          <Rank
+            style={{
+              backgroundColor: bookedColor,
+              color: "white",
+            }}
+          >
+            B
+          </Rank>
+          <span>Blocked</span>
         </Legend>
       </Container>
     </Container>

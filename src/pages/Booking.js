@@ -24,10 +24,16 @@ export default function Booking() {
   const { state, dispatch } = useContext(store);
 
   useEffect(() => {
+    // console.log(1111, state.seat);
+    dispatch({ type: "CLEAR_SEAT" });
     axios
       .get(`${API_URL}/event-layout`)
       .then((res) => {
         dispatch({ type: "EVENT_FETCHED", payload: res.data });
+        dispatch({
+          type: "ALERT",
+          payload: "Event data fetched successfully!",
+        });
       })
       .catch((error) => {
         console.log(error);
@@ -38,7 +44,7 @@ export default function Booking() {
     <Root>
       <Container>
         <OptionsPanel />
-        <TheaterLayout {...state.event} />
+        <TheaterLayout data={state.event} />
       </Container>
     </Root>
   );

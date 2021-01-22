@@ -24,6 +24,7 @@ function App() {
     <div className="App">
       <NavBar />
       <Snackbar
+        style={{ opacity: "0.9", marginTop: "3em" }}
         open={alert.open}
         autoHideDuration={3000}
         onClose={() => setAlert({ ...alert, open: false })}
