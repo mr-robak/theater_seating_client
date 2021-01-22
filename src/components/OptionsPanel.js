@@ -1,4 +1,7 @@
 import React, { useContext, useState } from "react";
+import { API_URL } from "../secrets/secrets";
+import axios from "axios";
+import { store } from "../store/store";
 import {
   Button,
   FormControl,
@@ -7,19 +10,25 @@ import {
   MenuItem,
   Select,
 } from "@material-ui/core";
-import { API_URL } from "../secrets/secrets";
-import axios from "axios";
-import { store } from "../store/store";
+import styled from "@emotion/styled";
+
+const Root = styled.div`
+  margin: 1em 2em;
+  height: 100%;
+  padding: 0 2em 1.5em;
+  border-radius: 5px;
+  box-shadow: 2px 1px 11px 0px rgba(0, 0, 0, 0.35);
+`;
 
 const useStyles = makeStyles({
   formControl: {
-    margin: 5,
+    marginTop: 38,
     minWidth: 120,
   },
   selectEmpty: {
     marginTop: 5,
   },
-  Button: { margin: 30 },
+  Button: { marginTop: 30 },
 });
 
 export default function OptionsPanel() {
@@ -53,7 +62,7 @@ export default function OptionsPanel() {
   };
 
   return (
-    <div>
+    <Root>
       <div>
         <FormControl className={classes.formControl}>
           <InputLabel id="demo-controlled-open-select-label">Rank</InputLabel>
@@ -115,6 +124,6 @@ export default function OptionsPanel() {
       >
         Order tickets
       </Button>
-    </div>
+    </Root>
   );
 }

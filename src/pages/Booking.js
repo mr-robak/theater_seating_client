@@ -4,6 +4,20 @@ import { API_URL } from "../secrets/secrets";
 import TheaterLayout from "../components/TheaterLayout";
 import OptionsPanel from "../components/OptionsPanel";
 import { store } from "../store/store";
+import styled from "@emotion/styled";
+
+const Root = styled.div`
+  display: inline-block;
+  justify-content: center;
+`;
+const Container = styled.div`
+  display: flex;
+  flex-direction: row-reverse;
+  /* margin-top: 1em; */
+  @media (max-width: 500px) {
+    flex-direction: column;
+  }
+`;
 
 export default function Booking() {
   const { state, dispatch } = useContext(store);
@@ -20,9 +34,11 @@ export default function Booking() {
   }, [dispatch]);
 
   return (
-    <div>
-      <OptionsPanel />
-      <TheaterLayout {...state.event} />
-    </div>
+    <Root>
+      <Container>
+        <OptionsPanel />
+        <TheaterLayout {...state.event} />
+      </Container>
+    </Root>
   );
 }

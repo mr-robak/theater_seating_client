@@ -1,23 +1,37 @@
 import React from "react";
 import styled from "@emotion/styled";
 
+const Container = styled.div`
+  /* display: inline-block; */
+  justify-content: center;
+  margin-top: 1em;
+  padding: 1em 1.4em 1em 1em;
+  border-radius: 5px;
+  box-shadow: 2px 1px 11px 0px rgba(0, 0, 0, 0.35);
+`;
+const Table = styled.table``;
+
 const TD = styled.td`
   height: 1.8em;
-  width: 1.5em;
-  /* border: none; */
+  min-width: 1.5em;
   border-radius: 13px 13px 0 0;
-  :hover {
-    background-color: yellow;
-    color: #ffff;
+`;
+const Legend = styled.div`
+  display: flex;
+  align-items: center;
+  margin-left: 0.7em;
+
+  span {
+    margin-left: 0.6em;
+    margin-right: 0.8em;
+    font-size: 0.7em;
+    font-style: italic;
   }
 `;
-
-const THEATER = styled.div`
-  display: inline-block;
-  justify-content: center;
-`;
-const TABLE = styled.table`
-  margin-top: 1em;
+const Rank = styled.div`
+  height: 1.1em;
+  width: 0.9em;
+  border-radius: 13px 13px 0 0;
 `;
 
 export default function TheaterLayout(props) {
@@ -34,7 +48,7 @@ export default function TheaterLayout(props) {
       //   console.log("section", section);
       const rows = Object.keys(section.rows);
       return (
-        <TABLE key={i}>
+        <Table key={i}>
           <thead>
             <tr>
               <th colSpan="9">{layout[sectionNr].name}</th>
@@ -76,10 +90,64 @@ export default function TheaterLayout(props) {
               );
             })}
           </tbody>
-        </TABLE>
+        </Table>
       );
     });
   };
 
-  return <THEATER>{renderLayout(layout)}</THEATER>;
+  return (
+    <Container>
+      {renderLayout(layout)}
+      <Container
+        style={{
+          margin: "1.5em",
+          padding: "0em 0.5em 1.2em 0.5em",
+          border: "2px dotted #BFBFBF",
+          // borderStyle: "dashed",
+          // borderWidth: "1px",
+          boxShadow: "none",
+        }}
+      >
+        <p>Legend:</p>
+        <Legend>
+          <Rank
+            style={{
+              backgroundColor: rankColor[0],
+              color: "white",
+            }}
+          />
+          <span>Rank 1</span>
+          <Rank
+            style={{
+              backgroundColor: rankColor[1],
+              color: "white",
+            }}
+          />
+          <span>Rank 2</span>
+          <Rank
+            style={{
+              backgroundColor: rankColor[2],
+              color: "white",
+            }}
+          />
+          <span>Rank 3</span>
+        </Legend>
+
+        <Legend
+          style={{
+            alignItems: "flex-start center ",
+            marginTop: "0.8em",
+          }}
+        >
+          <Rank
+            style={{
+              backgroundColor: bookedColor,
+              color: "white",
+            }}
+          />
+          <span>Seat booked</span>
+        </Legend>
+      </Container>
+    </Container>
+  );
 }
