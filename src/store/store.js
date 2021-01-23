@@ -9,6 +9,32 @@ const initialState = {
   },
   event: {},
   seat: [],
+  movieData: [
+    {
+      id: 1,
+      image: "blade.jpg",
+      title: "Blade Runner",
+      year: "1982",
+      description:
+        "A blade runner must pursue and terminate four replicants who stole a ship in space, and have returned to Earth to find their creator.",
+    },
+    {
+      id: 2,
+      image: "starwars.jpg",
+      title: "Star Wars - A New Hope",
+      year: 1977,
+      description:
+        "Luke Skywalker joins forces with a Jedi Knight, a cocky pilot, a Wookiee and two droids to save the galaxy from the Empire's world-destroying battle station.",
+    },
+    {
+      id: 3,
+      image: "alien.jpg",
+      title: "Alien",
+      year: 1979,
+      description:
+        "After a space merchant vessel receives an unknown transmission as a distress call, one of the crew is attacked by a mysterious life form.",
+    },
+  ],
 };
 
 const store = createContext(initialState);
@@ -68,18 +94,3 @@ const StateProvider = ({ children }) => {
 };
 
 export { store, StateProvider };
-
-// console.log(typeof s.section, typeof seat.section);
-// console.log(s.section   !== seat.section );
-// console.log(s.row, seat.row);
-// console.log(s.row !== seat.row);
-// console.log(s.seat, seat.seat);
-// console.log(s.seat !== seat.seat);
-
-// console.log(
-//   "whole",
-//   s.section * 1 !== seat.section &&
-//     s.row * 1 !== seat.row &&
-//     s.seat * 1 !== seat.seat
-// );
-// console.log(22222);

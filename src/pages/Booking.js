@@ -6,7 +6,6 @@ import OptionsPanel from "../components/OptionsPanel";
 import { store } from "../store/store";
 import styled from "@emotion/styled";
 import { useParams } from "react-router-dom";
-import { movieData } from "./Home";
 import MovieCard from "../components/MovieCard";
 
 const Root = styled.div`
@@ -27,8 +26,6 @@ export default function Booking() {
   const { state, dispatch } = useContext(store);
 
   const { id } = useParams();
-  console.log(movieData[id]);
-  // console.log(movieData);
 
   useEffect(() => {
     // console.log(1111, state.seat);
@@ -52,7 +49,7 @@ export default function Booking() {
       <Container>
         <OptionsPanel />
         <TheaterLayout data={state.event} />
-        <MovieCard data={movieData[id - 1]} hideButton={true} />
+        <MovieCard data={state.movieData[id - 1]} hideButton={true} />
       </Container>
     </Root>
   );

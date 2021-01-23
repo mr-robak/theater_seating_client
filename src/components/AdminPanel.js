@@ -18,7 +18,6 @@ import {
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import styled from "@emotion/styled";
-import { movieData } from "../pages/Home";
 
 const Root = styled.div`
   margin: 1em 2em;
@@ -163,8 +162,8 @@ export default function OptionsPanel() {
                 setSelectMovie(e.target.value);
               }}
             >
-              {movieData
-                ? movieData.map((movie) => {
+              {state.movieData
+                ? state.movieData.map((movie) => {
                     return <MenuItem value={movie.id}>{movie.title}</MenuItem>;
                   })
                 : null}
