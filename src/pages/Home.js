@@ -20,7 +20,7 @@ const StyledDiv = styled.div`
 const Home = () => {
   return (
     <StyledDiv>
-      {data.map((movie, i) => (
+      {movieData.map((movie, i) => (
         <MovieCard key={i} data={movie} />
       ))}
     </StyledDiv>
@@ -29,7 +29,7 @@ const Home = () => {
 
 export default Home;
 
-const data = [
+export const movieData = [
   {
     id: 1,
     image: "blade.jpg",
@@ -39,7 +39,7 @@ const data = [
       "A blade runner must pursue and terminate four replicants who stole a ship in space, and have returned to Earth to find their creator.",
   },
   {
-    id: 3,
+    id: 2,
     image: "starwars.jpg",
     title: "Star Wars - A New Hope",
     year: 1977,
@@ -47,7 +47,7 @@ const data = [
       "Luke Skywalker joins forces with a Jedi Knight, a cocky pilot, a Wookiee and two droids to save the galaxy from the Empire's world-destroying battle station.",
   },
   {
-    id: 2,
+    id: 3,
     image: "alien.jpg",
     title: "Alien",
     year: 1979,

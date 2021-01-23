@@ -18,6 +18,7 @@ import {
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import styled from "@emotion/styled";
+import { movieData } from "../pages/Home";
 
 const Root = styled.div`
   margin: 1em 2em;
@@ -60,20 +61,11 @@ const useStyles = makeStyles({
 });
 
 export default function OptionsPanel() {
-  const [preferences, setPreferences] = useState({ rank: 1, tickets: 1 });
+  const { state, dispatch } = useContext(store);
+  const [selectMovie, setSelectMovie] = useState(1);
   const [openR, setOpenR] = useState(false);
   const [expanded, setExpanded] = useState(false);
-
-  const { state, dispatch } = useContext(store);
-  // console.log("state.seat", state.event[1].rows[1].seats[7]);
-
-  // const demo = [
-  //   { section: 1, row: 1, seat: 1 },
-  //   { section: 1, row: 1, seat: 1 },
-  // ];
-
   const [seats, setSeats] = useState(state.seat);
-  // console.log(seats);
 
   const classes = useStyles();
 
@@ -166,14 +158,16 @@ export default function OptionsPanel() {
               onOpen={() => {
                 setOpenR(true);
               }}
-              value={preferences.rank}
+              value={selectMovie}
               onChange={(e) => {
-                setPreferences({ ...preferences, rank: e.target.value });
+                setSelectMovie(e.target.value);
               }}
             >
-              <MenuItem value={1}>Event 1</MenuItem>
-              <MenuItem value={2}>Event 2</MenuItem>
-              <MenuItem value={3}>Event 3</MenuItem>
+              {movieData
+                ? movieData.map((movie) => {
+                    return <MenuItem value={movie.id}>{movie.title}</MenuItem>;
+                  })
+                : null}
             </Select>
           </FormControl>
         </div>

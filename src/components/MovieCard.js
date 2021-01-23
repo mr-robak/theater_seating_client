@@ -10,11 +10,11 @@ import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles({
   root: {
-    marginTop: "2em",
+    marginTop: "1em",
     marginLeft: "1em",
     width: 300,
     minWidth: 250,
-    // minHeight: 250,
+    height: "100%",
     alignItems: "center",
     justifyContent: "center",
     borderRadius: "7px",
@@ -22,7 +22,8 @@ const useStyles = makeStyles({
   },
   media: { height: 400 },
   content: {
-    // padding: "1em",
+    padding: "1em",
+    height: "100%",
   },
   // year: { marginBottom: "0.8em" },
   button: {
@@ -36,9 +37,8 @@ const useStyles = makeStyles({
 
 const MovieCard = (props) => {
   const classes = useStyles();
-
   const { id, image, title, year, description } = props.data;
-
+  console.log("hideButton", props.data);
   return (
     <Card className={classes.root}>
       <CardActionArea onClick={() => {}} href={`/booking/${id}`} target="_self">
@@ -64,19 +64,21 @@ const MovieCard = (props) => {
           </Typography>
         </CardContent>
       </CardActionArea>
-      <CardActions>
-        <Button
-          className={classes.button}
-          variant="contained"
-          component="a"
-          href={`/booking/${id}`}
-          target="_self"
-          size="big"
-          color="secondary"
-        >
-          Get tickets
-        </Button>
-      </CardActions>
+      {props.hideButton ? null : (
+        <CardActions>
+          <Button
+            className={classes.button}
+            variant="contained"
+            component="a"
+            href={`/booking/${id}`}
+            target="_self"
+            size="big"
+            color="secondary"
+          >
+            Get tickets
+          </Button>
+        </CardActions>
+      )}
     </Card>
   );
 };
