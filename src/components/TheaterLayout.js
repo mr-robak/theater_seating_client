@@ -53,7 +53,7 @@ export default function TheaterLayout(props) {
   useEffect(() => {
     const data = props.data;
     setLayout(data);
-  }, [props.data]);
+  }, [props.data, layout]);
 
   const renderLayout = (layout) => {
     const sections = Object.keys(layout);
@@ -145,8 +145,6 @@ export default function TheaterLayout(props) {
           margin: "1.5em",
           padding: "0em 0.5em 1.2em 0.5em",
           border: "2px dotted #BFBFBF",
-          // borderStyle: "dashed",
-          // borderWidth: "1px",
           boxShadow: "none",
         }}
       >

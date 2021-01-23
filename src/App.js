@@ -24,13 +24,13 @@ function App() {
     <div className="App">
       <NavBar />
       <Snackbar
-        style={{ opacity: "0.9", marginTop: "3em" }}
+        style={{ marginTop: "4em" }}
         open={alert.open}
-        autoHideDuration={3000}
+        autoHideDuration={1000}
         onClose={() => setAlert({ ...alert, open: false })}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
-        <Alert severity="success">{alert.message}</Alert>
+        <Alert style={{ background: "#7ec979" }}>{alert.message} </Alert>
       </Snackbar>
 
       <Switch>

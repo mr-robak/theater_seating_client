@@ -3,6 +3,9 @@ import { API_URL } from "../secrets/secrets";
 import axios from "axios";
 import { store } from "../store/store";
 import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
   Button,
   Chip,
   FormControl,
@@ -13,11 +16,12 @@ import {
   Select,
   Typography,
 } from "@material-ui/core";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import styled from "@emotion/styled";
 
 const Root = styled.div`
   margin: 1em 2em;
-  height: 100%;
+  /* height: 100%; */
   padding: 1em 2em 1.5em;
   border-radius: 5px;
   box-shadow: 2px 1px 11px 0px rgba(0, 0, 0, 0.35);
@@ -31,19 +35,35 @@ const useStyles = makeStyles({
   selectEmpty: {
     marginTop: 5,
   },
-  Button: { marginTop: 30 },
+  Button: { marginTop: 30, background: "#5e5d5d" },
   boxTitle: { fontSize: "1.3em", width: "190px" },
   ticketList: { padding: "0.5em", listStyle: "none" },
-  boxSelect: { maxWidth: "130px", fontSize: "1em", margin: "2em 1em" },
-  chip: { margin: "2px", background: "#2da84e", color: "#fff" },
+  boxSelect: {
+    maxWidth: "170px",
+    fontSize: "1em",
+    margin: "3em 0em",
+    padding: "0.3em",
+    border: "2px dotted #BFBFBF",
+  },
+  chip: { margin: "2px", background: "#f77248", color: "#fff" },
+  accordion: {
+    width: "255px",
+    position: "relative",
+    left: "2em",
+    borderRadius: "5px",
+    boxShadow: "2px 1px 11px 0px rgba(0, 0, 0, 0.35)",
+  },
+  heading: { marginLeft: "3.2em" },
+  clearButton: { marginLeft: "1em" },
 });
 
 export default function OptionsPanel() {
   const [preferences, setPreferences] = useState({ rank: 1, tickets: 1 });
   const [openR, setOpenR] = useState(false);
+  const [expanded, setExpanded] = useState(false);
 
   const { state, dispatch } = useContext(store);
-  // console.log("state.seat", state.seat);
+  // console.log("state.seat", state.event[1].rows[1].seats[7]);
 
   // const demo = [
   //   { section: 1, row: 1, seat: 1 },
@@ -55,29 +75,62 @@ export default function OptionsPanel() {
 
   const classes = useStyles();
 
+  const toggleOptions = () => {
+    setExpanded(expanded ? false : true);
+  };
+
   useEffect(() => {
     setSeats(state.seat);
-  }, [state.seat, seats]);
+  }, [state.seat, seats, expanded]);
 
-  const orderTickets = (order) => {
+  const blockTickets = (seats) => {
     axios({
       method: "post",
-      url: `${API_URL}/bookings`,
-      data: order,
+      url: `${API_URL}/admin/block`,
+      data: seats,
     })
       .then(function (response) {
         if (response.status === 200) {
           dispatch({
             type: "ALERT",
-            payload: "Ticket reservation successful!",
+            payload: "Seats blocked/unblocked successfully!",
           });
-
           dispatch({ type: "EVENT_FETCHED", payload: response.data });
+          dispatch({ type: "CLEAR_SEAT" });
         }
       })
       .catch(function (error) {
         console.log("error", error);
       });
+  };
+
+  const resetLayout = () => {
+    const check = window.confirm(
+      "Are you sure you want to clear all bookings?"
+    );
+    toggleOptions();
+    if (check) {
+      axios({
+        method: "put",
+        url: `${API_URL}/admin/clear`,
+        data: { secret: "123456" },
+      })
+        .then(function (response) {
+          if (response.status === 200) {
+            // dispatch({
+            //   type: "ALERT",
+            //   payload: "All bookings has been canceled",
+            // });
+            dispatch({ type: "EVENT_FETCHED", payload: response.data });
+            setExpanded(false);
+            // console.log("response.data", response.data);
+            window.location.reload(false);
+          }
+        })
+        .catch(function (error) {
+          console.log("error", error);
+        });
+    }
   };
 
   const renderTickets = (seats) => {
@@ -86,64 +139,86 @@ export default function OptionsPanel() {
       const label = `Section:${section} Row:${row} Seat:${seat.seat}`;
       return (
         <li key={i}>
-          <Chip
-            size="small"
-            label={label}
-            // onDelete={handleDelete(seat)}
-            className={classes.chip}
-          />
+          <Chip size="small" label={label} className={classes.chip} />
         </li>
       );
     });
   };
 
-  // const handleDelete = (chipToDelete) => () => {
-  //   dispatch({ type: "SEAT_SELECT", payload: chipToDelete });
-  // };
-
   return (
-    <Root>
-      <Typography className={classes.boxTitle}>Block seats</Typography>
-      <div>
-        <FormControl className={classes.formControl}>
-          <InputLabel id="demo-controlled-open-select-label">
-            Select an event
-          </InputLabel>
-          <Select
-            labelId="demo-controlled-open-select-label"
-            id="demo-controlled-open-select"
-            open={openR}
-            onClose={() => {
-              setOpenR(false);
-            }}
-            onOpen={() => {
-              setOpenR(true);
-            }}
-            value={preferences.rank}
-            onChange={(e) => {
-              setPreferences({ ...preferences, rank: e.target.value });
-            }}
-          >
-            <MenuItem value={1}>Event 1</MenuItem>
-            <MenuItem value={2}>Event 2</MenuItem>
-            <MenuItem value={3}>Event 3</MenuItem>
-          </Select>
-        </FormControl>
-      </div>
-      <Typography className={classes.boxSelect}>
-        Select seats you want to block on the theater plan:
-      </Typography>
-      <Paper component="ul" className={classes.ticketList}>
-        {renderTickets(seats)}
-      </Paper>
-      <Button
-        className={classes.Button}
-        variant="contained"
-        color="primary"
-        onClick={() => orderTickets(preferences)}
+    <div>
+      <Root>
+        <Typography className={classes.boxTitle}>Block seats</Typography>
+        <div>
+          <FormControl className={classes.formControl}>
+            <InputLabel id="demo-controlled-open-select-label">
+              Select an event
+            </InputLabel>
+            <Select
+              labelId="demo-controlled-open-select-label"
+              id="demo-controlled-open-select"
+              open={openR}
+              onClose={() => {
+                setOpenR(false);
+              }}
+              onOpen={() => {
+                setOpenR(true);
+              }}
+              value={preferences.rank}
+              onChange={(e) => {
+                setPreferences({ ...preferences, rank: e.target.value });
+              }}
+            >
+              <MenuItem value={1}>Event 1</MenuItem>
+              <MenuItem value={2}>Event 2</MenuItem>
+              <MenuItem value={3}>Event 3</MenuItem>
+            </Select>
+          </FormControl>
+        </div>
+        <Typography className={classes.boxSelect}>
+          Select seats you want to block or unblock on the theater plan.
+        </Typography>
+        {seats && seats.length > 0 ? (
+          <div>
+            <Paper component="ul" className={classes.ticketList}>
+              {renderTickets(seats)}
+            </Paper>
+
+            <Button
+              className={classes.Button}
+              variant="contained"
+              color="secondary"
+              onClick={() => blockTickets(seats)}
+            >
+              Update seats
+            </Button>
+          </div>
+        ) : null}
+      </Root>
+      <Accordion
+        className={classes.accordion}
+        expanded={expanded}
+        onChange={toggleOptions}
       >
-        Order tickets
-      </Button>
-    </Root>
+        <AccordionSummary
+          className={classes.heading}
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+        >
+          <Typography>More actions</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Button
+            className={classes.clearButton}
+            variant="contained"
+            color="secondary"
+            onClick={resetLayout}
+          >
+            Clear all bookings
+          </Button>
+        </AccordionDetails>
+      </Accordion>
+    </div>
   );
 }

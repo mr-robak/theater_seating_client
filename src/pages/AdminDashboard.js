@@ -33,16 +33,15 @@ export default function AdminDashboard() {
     axios
       .get(`${API_URL}/event-layout`)
       .then((res) => {
-        console.log(res.data);
         setLayout(res.data);
-        // dispatch({ type: "EVENT_FETCHED", payload: res.data });
+        dispatch({ type: "EVENT_FETCHED", payload: res.data });
         dispatch({
           type: "ALERT",
           payload: "Event data fetched successfully!",
         });
       })
       .catch((error) => {
-        console.log(error);
+        console.log(11111, error);
       });
   }, [dispatch]);
 
