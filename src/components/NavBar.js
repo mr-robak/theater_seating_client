@@ -13,7 +13,13 @@ import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    textDecoration: "none !important",
     flexGrow: 1,
+  },
+  appBar: {
+    background:
+      "linear-gradient(-55deg, #f5429e, #ff5252 50%, #ff5852 70%, #ff6b52 90%)",
+    fontSize: "4em",
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -24,14 +30,11 @@ const useStyles = makeStyles((theme) => ({
     textDecoration: "none",
     color: "inherit",
   },
-  appBar: {
-    background:
-      "linear-gradient(-55deg, #f5429e, #ff5252 50%, #ff5852 70%, #ff6b52 90%)",
-    fontSize: "3em",
-    fontStyle: "strong",
-    // fontStretch: "extra-expanded",
-  },
 }));
+
+const StyledTypography = styled(Typography)`
+  text-decoration: "none" !important;
+`;
 
 export default function NavBar() {
   const classes = useStyles();
@@ -50,14 +53,14 @@ export default function NavBar() {
           >
             <img alt="guts logo" src={Logo} width="40" />
           </IconButton>
-          <Typography
+          <StyledTypography
             variant="h6"
             className={classes.title}
             component={Link}
             to={"/"}
           >
-            GUTS-EVENTS
-          </Typography>
+            GUTS-FLIX
+          </StyledTypography>
           <Button color="inherit" component={Link} to={"/admin-dashboard"}>
             Admin Dasboard
           </Button>

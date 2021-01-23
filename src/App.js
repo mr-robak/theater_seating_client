@@ -7,6 +7,7 @@ import MuiAlert from "@material-ui/lab/Alert";
 import Booking from "./pages/Booking";
 import AdminDashboard from "./pages/AdminDashboard";
 import NavBar from "./components/NavBar";
+import Home from "./pages/Home";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -38,7 +39,8 @@ function App() {
           <AdminDashboard />
         </Route>
         <Route path="/">
-          <Booking />
+          <Home />
+          {/* <Booking /> */}
         </Route>
       </Switch>
     </div>
