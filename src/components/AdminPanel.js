@@ -23,6 +23,8 @@ const Root = styled.div`
   margin: 1em 2em;
   /* height: 100%; */
   padding: 1em 2em 1.5em;
+  background: white;
+
   border-radius: 5px;
   box-shadow: 2px 1px 11px 0px rgba(0, 0, 0, 0.35);
 `;

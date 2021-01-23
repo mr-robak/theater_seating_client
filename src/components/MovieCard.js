@@ -17,7 +17,7 @@ const useStyles = makeStyles({
     // minHeight: 250,
     alignItems: "center",
     justifyContent: "center",
-    /* border-radius: 5px; */
+    borderRadius: "7px",
     boxShadow: "2px 1px 11px 0px rgba(0, 0, 0, 0.35)",
   },
   media: { height: 400 },

@@ -24,6 +24,7 @@ const useStyles = makeStyles({
   formControl: {
     marginTop: 38,
     minWidth: 120,
+    background: "#ffffff",
   },
   selectEmpty: {
     marginTop: 5,
@@ -62,7 +63,7 @@ export default function OptionsPanel() {
   };
 
   return (
-    <Root>
+    <Root className={classes.formControl}>
       <div>
         <FormControl className={classes.formControl}>
           <InputLabel id="demo-controlled-open-select-label">Rank</InputLabel>

@@ -38,6 +38,9 @@ function App() {
         <Route path="/admin-dashboard">
           <AdminDashboard />
         </Route>
+        <Route path="/booking/:id">
+          <Booking />
+        </Route>
         <Route path="/">
           <Home />
           {/* <Booking /> */}
