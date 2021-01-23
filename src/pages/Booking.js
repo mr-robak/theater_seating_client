@@ -31,7 +31,7 @@ export default function Booking() {
     // console.log(1111, state.seat);
     dispatch({ type: "CLEAR_SEAT" });
     axios
-      .get(`${API_URL}/event-layout`)
+      .get(`${API_URL}/event-layout/${id}`)
       .then((res) => {
         dispatch({ type: "EVENT_FETCHED", payload: res.data });
         dispatch({
