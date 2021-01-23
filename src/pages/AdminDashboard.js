@@ -26,12 +26,18 @@ const Container = styled.div`
 
 export default function AdminDashboard() {
   const { state, dispatch } = useContext(store);
+  const [id, setId] = useState(1);
+  console.log(2222222, "id", id);
 
   const [layout, setLayout] = useState({});
 
+  const selectEvent = (id) => {
+    setId(id);
+  };
+
   useEffect(() => {
     axios
-      .get(`${API_URL}/event-layout`)
+      .get(`${API_URL}/event-layout/${id}`)
       .then((res) => {
         setLayout(res.data);
         dispatch({ type: "EVENT_FETCHED", payload: res.data });
@@ -43,12 +49,12 @@ export default function AdminDashboard() {
       .catch((error) => {
         console.log(11111, error);
       });
-  }, [dispatch]);
+  }, [id, dispatch]);
 
   return (
     <Root>
       <Container>
-        <AdminPanel />
+        <AdminPanel selectEvent={selectEvent} />
         <TheaterLayout data={layout} admin={true} />
       </Container>
     </Root>

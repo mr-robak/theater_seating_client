@@ -59,7 +59,9 @@ const useStyles = makeStyles({
   clearButton: { marginLeft: "1em" },
 });
 
-export default function OptionsPanel() {
+export default function OptionsPanel(props) {
+  console.log(props.selectEvent);
+
   const { state, dispatch } = useContext(store);
   const [selectMovie, setSelectMovie] = useState(1);
   const [openR, setOpenR] = useState(false);
@@ -160,6 +162,8 @@ export default function OptionsPanel() {
               value={selectMovie}
               onChange={(e) => {
                 setSelectMovie(e.target.value);
+                console.log(e.target.value);
+                props.selectEvent(e.target.value);
               }}
             >
               {state.movieData
