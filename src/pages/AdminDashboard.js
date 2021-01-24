@@ -14,14 +14,13 @@ const Root = styled.div`
 const Container = styled.div`
   display: flex;
   flex-direction: row-reverse;
-  /* margin-top: 1em; */
   @media (max-width: 500px) {
     flex-direction: column;
   }
 `;
 
 export default function AdminDashboard() {
-  const { state, dispatch } = useContext(store);
+  const { dispatch } = useContext(store);
   const [id, setId] = useState(1);
   const [layout, setLayout] = useState({});
   const [trigger, setTrigger] = useState(true);
@@ -31,21 +30,21 @@ export default function AdminDashboard() {
   };
 
   const triggerReload = () => {
-    // const newTrigger = trigger ? false : true;
-    // setTrigger(newTrigger);
-    // axios
-    //   .get(`${API_URL}/event-layout/${id}`)
-    //   .then((res) => {
-    //     setLayout(res.data);
-    //     dispatch({ type: "EVENT_FETCHED", payload: res.data });
-    //     dispatch({
-    //       type: "ALERT",
-    //       payload: "Event data fetched successfully!",
-    //     });
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
+    const newTrigger = trigger ? false : true;
+    setTrigger(newTrigger);
+    axios
+      .get(`${API_URL}/event-layout/${id}`)
+      .then((res) => {
+        setLayout(res.data);
+        dispatch({ type: "EVENT_FETCHED", payload: res.data });
+        dispatch({
+          type: "ALERT",
+          payload: "Event data fetched successfully!",
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   useEffect(() => {

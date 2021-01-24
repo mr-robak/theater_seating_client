@@ -25,7 +25,6 @@ const useStyles = makeStyles({
     padding: "1em",
     height: "100%",
   },
-  // year: { marginBottom: "0.8em" },
   button: {
     background: "#ff6b52",
     bottom: "1em",
@@ -41,7 +40,7 @@ const MovieCard = (props) => {
 
   return (
     <Card className={classes.root}>
-      <CardActionArea onClick={() => {}} href={`/booking/${id}`} target="_self">
+      <CardActionArea href={`/booking/${id}`} target="_self">
         <CardMedia
           className={classes.media}
           image={`/assets/${image}`}

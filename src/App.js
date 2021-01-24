@@ -2,12 +2,12 @@ import { useContext, useEffect, useState } from "react";
 import { Switch, Route } from "react-router-dom";
 import { store } from "./store/store";
 import { Snackbar } from "@material-ui/core";
-import "./App.css";
 import MuiAlert from "@material-ui/lab/Alert";
 import Booking from "./pages/Booking";
 import AdminDashboard from "./pages/AdminDashboard";
 import NavBar from "./components/NavBar";
 import Home from "./pages/Home";
+import "./App.css";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -43,7 +43,6 @@ function App() {
         </Route>
         <Route path="/">
           <Home />
-          {/* <Booking /> */}
         </Route>
       </Switch>
     </div>

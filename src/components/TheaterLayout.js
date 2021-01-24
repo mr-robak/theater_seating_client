@@ -3,7 +3,6 @@ import styled from "@emotion/styled";
 import { store } from "../store/store";
 
 const Container = styled.div`
-  /* display: inline-block; */
   justify-content: center;
   margin-top: 1em;
   margin-left: 2em;
@@ -43,8 +42,6 @@ const Rank = styled.div`
 export default function TheaterLayout(props) {
   const data = props.data;
   const [layout, setLayout] = useState(data);
-  // console.log("layout", layout);
-  // console.log("data", data);
 
   const { dispatch } = useContext(store);
 
@@ -54,17 +51,16 @@ export default function TheaterLayout(props) {
   const seatSelect = (seat) => dispatch({ type: "SEAT_SELECT", payload: seat });
 
   useEffect(() => {
-    // const data = props.data;
     setLayout(data);
   }, [data, layout]);
 
   const renderLayout = (layout) => {
     const sections = Object.keys(layout);
-    //   console.log("sectionsList", sectionsList);
+
     return sections.map((sectionNr, i) => {
       const section = layout[sectionNr];
-      //   console.log("section", section);
       const rows = Object.keys(section.rows);
+
       return (
         <Table key={i}>
           <thead>

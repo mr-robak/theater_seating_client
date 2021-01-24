@@ -21,7 +21,6 @@ import styled from "@emotion/styled";
 
 const Root = styled.div`
   margin: 1em 2em;
-  /* height: 100%; */
   padding: 1em 2em 1.5em;
   background: white;
 

@@ -16,7 +16,6 @@ const Root = styled.div`
 const Container = styled.div`
   display: flex;
   flex-direction: row-reverse;
-  /* margin-top: 1em; */
   @media (max-width: 500px) {
     flex-direction: column;
   }
@@ -28,7 +27,6 @@ export default function Booking() {
   const { id } = useParams();
 
   useEffect(() => {
-    // console.log(1111, state.seat);
     dispatch({ type: "CLEAR_SEAT" });
     axios
       .get(`${API_URL}/event-layout/${id * 1}`)
