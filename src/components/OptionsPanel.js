@@ -32,7 +32,7 @@ const useStyles = makeStyles({
   Button: { marginTop: 30 },
 });
 
-export default function OptionsPanel() {
+export default function OptionsPanel(props) {
   const [preferences, setPreferences] = useState({ rank: 1, tickets: 1 });
   const [openR, setOpenR] = useState(false);
   const [openT, setOpenT] = useState(false);
@@ -44,7 +44,7 @@ export default function OptionsPanel() {
   const orderTickets = (order) => {
     axios({
       method: "post",
-      url: `${API_URL}/bookings`,
+      url: `${API_URL}/bookings/${props.id}`,
       data: order,
     })
       .then(function (response) {

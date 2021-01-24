@@ -54,9 +54,9 @@ export default function TheaterLayout(props) {
   const seatSelect = (seat) => dispatch({ type: "SEAT_SELECT", payload: seat });
 
   useEffect(() => {
-    const data = props.data;
+    // const data = props.data;
     setLayout(data);
-  }, [props.data, layout]);
+  }, [data, layout]);
 
   const renderLayout = (layout) => {
     const sections = Object.keys(layout);

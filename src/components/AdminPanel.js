@@ -60,10 +60,8 @@ const useStyles = makeStyles({
 });
 
 export default function OptionsPanel(props) {
-  console.log(props.selectEvent);
-
   const { state, dispatch } = useContext(store);
-  const [selectMovie, setSelectMovie] = useState(1);
+  const [eventId, setEventId] = useState(1);
   const [openR, setOpenR] = useState(false);
   const [expanded, setExpanded] = useState(false);
   const [seats, setSeats] = useState(state.seat);
@@ -81,7 +79,7 @@ export default function OptionsPanel(props) {
   const blockTickets = (seats) => {
     axios({
       method: "post",
-      url: `${API_URL}/admin/block`,
+      url: `${API_URL}/admin/block/${eventId}`,
       data: seats,
     })
       .then(function (response) {
@@ -103,22 +101,25 @@ export default function OptionsPanel(props) {
     const check = window.confirm(
       "Are you sure you want to clear all bookings?"
     );
-    toggleOptions();
+
     if (check) {
+      toggleOptions();
       axios({
-        method: "put",
-        url: `${API_URL}/admin/clear`,
+        method: "post",
+        url: `${API_URL}/admin/clear/${eventId}`,
         data: { secret: "123456" },
       })
         .then(function (response) {
           if (response.status === 200) {
-            // dispatch({
-            //   type: "ALERT",
-            //   payload: "All bookings has been canceled",
-            // });
+            dispatch({
+              type: "ALERT",
+              payload: "All bookings has been canceled",
+            });
             dispatch({ type: "EVENT_FETCHED", payload: response.data });
             setExpanded(false);
-            // console.log("response.data", response.data);
+            dispatch({ type: "CLEAR_SEAT" });
+            props.selectEvent(eventId);
+            // props.triggerReload();
             window.location.reload(false);
           }
         })
@@ -159,11 +160,11 @@ export default function OptionsPanel(props) {
               onOpen={() => {
                 setOpenR(true);
               }}
-              value={selectMovie}
+              value={eventId}
               onChange={(e) => {
-                setSelectMovie(e.target.value);
-                console.log(e.target.value);
+                setEventId(e.target.value);
                 props.selectEvent(e.target.value);
+                dispatch({ type: "CLEAR_SEAT" });
               }}
             >
               {state.movieData

@@ -10,10 +10,6 @@ const Root = styled.div`
   display: inline-block;
   justify-content: center;
   margin-top: 1em;
-  /* width: 100%;
-  height: 100%; */
-  /*background: #f5429e;
-  background: linear-gradient(135deg, #f5429e 0%, #ff5852 50%, #ff6b52 100%); */
 `;
 const Container = styled.div`
   display: flex;
@@ -27,12 +23,29 @@ const Container = styled.div`
 export default function AdminDashboard() {
   const { state, dispatch } = useContext(store);
   const [id, setId] = useState(1);
-  console.log(2222222, "id", id);
-
   const [layout, setLayout] = useState({});
+  const [trigger, setTrigger] = useState(true);
 
   const selectEvent = (id) => {
     setId(id);
+  };
+
+  const triggerReload = () => {
+    // const newTrigger = trigger ? false : true;
+    // setTrigger(newTrigger);
+    // axios
+    //   .get(`${API_URL}/event-layout/${id}`)
+    //   .then((res) => {
+    //     setLayout(res.data);
+    //     dispatch({ type: "EVENT_FETCHED", payload: res.data });
+    //     dispatch({
+    //       type: "ALERT",
+    //       payload: "Event data fetched successfully!",
+    //     });
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
   };
 
   useEffect(() => {
@@ -47,14 +60,14 @@ export default function AdminDashboard() {
         });
       })
       .catch((error) => {
-        console.log(11111, error);
+        console.log(error);
       });
-  }, [id, dispatch]);
+  }, [id, dispatch, trigger]);
 
   return (
     <Root>
       <Container>
-        <AdminPanel selectEvent={selectEvent} />
+        <AdminPanel selectEvent={selectEvent} triggerReload={triggerReload} />
         <TheaterLayout data={layout} admin={true} />
       </Container>
     </Root>

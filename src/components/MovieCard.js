@@ -38,7 +38,7 @@ const useStyles = makeStyles({
 const MovieCard = (props) => {
   const classes = useStyles();
   const { id, image, title, year, description } = props.data;
-  console.log("hideButton", props.data);
+
   return (
     <Card className={classes.root}>
       <CardActionArea onClick={() => {}} href={`/booking/${id}`} target="_self">

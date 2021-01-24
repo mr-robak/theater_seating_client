@@ -21,10 +21,10 @@ const initialState = {
     {
       id: 2,
       image: "starwars.jpg",
-      title: "Star Wars - A New Hope",
+      title: "Star Wars",
       year: 1977,
       description:
-        "Luke Skywalker joins forces with a Jedi Knight, a cocky pilot, a Wookiee and two droids to save the galaxy from the Empire's world-destroying battle station.",
+        "Luke joins forces with a Jedi, a cocky pilot, a Wookiee and droids to save the galaxy from the Empire's world-destroying battle station.",
     },
     {
       id: 3,

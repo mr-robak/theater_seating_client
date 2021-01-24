@@ -31,7 +31,7 @@ export default function Booking() {
     // console.log(1111, state.seat);
     dispatch({ type: "CLEAR_SEAT" });
     axios
-      .get(`${API_URL}/event-layout/${id}`)
+      .get(`${API_URL}/event-layout/${id * 1}`)
       .then((res) => {
         dispatch({ type: "EVENT_FETCHED", payload: res.data });
         dispatch({
@@ -42,12 +42,12 @@ export default function Booking() {
       .catch((error) => {
         console.log(error);
       });
-  }, [dispatch]);
+  }, [dispatch, id]);
 
   return (
     <Root>
       <Container>
-        <OptionsPanel />
+        <OptionsPanel id={id} />
         <TheaterLayout data={state.event} />
         <MovieCard data={state.movieData[id - 1]} hideButton={true} />
       </Container>
